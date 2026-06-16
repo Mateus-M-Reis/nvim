@@ -5,7 +5,6 @@ return {
     opts = require "configs.conform",
   },
 
-  -- These are some examples, uncomment them if you want to see them work!
   {
     "neovim/nvim-lspconfig",
     config = function()
@@ -52,26 +51,23 @@ return {
     },
   },
 
-  --{
-  --  "williamboman/mason.nvim",
-  --  opts = {
-  --    ensure_installed = {
-  --      "lua-language-server",
-  --      "bash-language-server",
-  --      -- data science
-  --      "pyright",
-  --      "python-lsp-server",
-  --      -- web dev
-  --      "html-lsp",
-  --      "css-lsp",
-  --      -- data formats
-  --      "json-lsp",
-  --      -- games
-  --      "glsl_analyzer",
-  --      "gdtoolkit",
-  --    },
-  --  },
-  --},
+  {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "lua-language-server", "stylua",
+        "bash-language-server",
+        -- data science
+        "pyright",
+        -- web dev
+        "html-lsp",
+        "css-lsp",
+        "json-lsp",
+        -- games
+        "glsl_analyzer",
+      },
+    },
+  },
 
   {
     'MeanderingProgrammer/render-markdown.nvim',
@@ -94,7 +90,7 @@ return {
           default_filetype_enabled = true,
           map_keys = true,
           key_bindings = {
-            accept = "<C-a>", accept_word = "<C-w>", accept_line = "<C-r>", clear = "<C-z>", next = ">C-n>", prev = "<C-p>"
+            accept = "<C-a>", accept_word = false, accept_line = false, clear = false, next = "<C-n>", prev = "<C-p>"
           },
         }
       })
@@ -118,22 +114,5 @@ return {
   },
 
   --{ "monkoose/DoNe", lazy = false },
-
-  --{
-  --  "lommix/godot.nvim",
-  --  lazy = true,
-  --  cmd = { "GodotDebug", "GodotBreakAtCursor", "GodotStep", "GodotQuit", "GodotContinue" },
-  --},
-
   --{ "rcarriga/nvim-dap-ui", dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} },
-
-  --{
-  --  'Mathijs-Bakker/godotdev.nvim',
-  --  dependencies = { 'nvim-lspconfig', 'nvim-dap', 'nvim-dap-ui', 'nvim-treesitter' },
-  --  config = function()
-  --    require("godotdev").setup({
-  --      autostart_editor_server = true
-  --    })
-  --  end
-  --},
 }

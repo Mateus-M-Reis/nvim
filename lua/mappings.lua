@@ -4,6 +4,7 @@ local term = require("nvchad.term")
 local nomap = vim.keymap.del
 nomap({"n", "t"}, "<A-i>")
 nomap({"n", "t"}, "<A-h>")
+nomap("n", "<C-n>")
 
 local map = vim.keymap.set
 local replace = vim.api.nvim_replace_termcodes
@@ -50,7 +51,7 @@ map({ "n", "t", "i" },      "<A-k>", mterm("float", "3"),                       
 map({ "n", "t", "i" },      "<A-l>", mterm("float", "4"),                               { desc = "Term toggle hf"  })
 map({ "n", "t", "i" },      "<A-;>", mterm("sp",    "h"),                               { desc = "Term toggle h"   })
 map({ "n", "t", "i" },      "<A-:>", mterm("vsp",   "v"),                               { desc = "Term toggle v"   })
-map({ "t", "t", "i" },      "<C-t>", replace("<C-\\><C-N>", true, true, true),          { desc = "Term normal mode"})
+--map({ "t", "t", "i" },      "<C-t>", replace("<C-\\><C-N>", true, true, true),          { desc = "Term normal mode"})
 
 -- cli apps
 map("n", "<leader>ll", mterm("float", "4", "lazygit && exit"), { desc = "lazygit"})
