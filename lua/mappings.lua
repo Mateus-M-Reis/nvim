@@ -73,8 +73,8 @@ map("n", "<A-BS>", mterm("float", "1", lovr .. " dev/lodr ./ && exit"), { desc =
 --map("n", "<F5>", "<Cmd>DoNe build<CR>", { desc = "defold start" })
 --map("n", "<A-BS>", "<Cmd>DoNe reload<CR>", { desc = "defold hot-reload" })
 
+-- music
 local strudel = require("strudel")
-
 map("n", "<leader>sl", strudel.launch,     { desc = "Launch Strudel" })
 map("n", "<leader>sq", strudel.quit,       { desc = "Quit Strudel" })
 map("n", "<leader>st", strudel.toggle,     { desc = "Strudel Toggle Play/Stop" })
