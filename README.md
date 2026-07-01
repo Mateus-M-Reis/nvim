@@ -1,3 +1,5 @@
+> **Deprecated** — moved to [dotfiles](https://github.com/Mateus-M-Reis/dotfiles)
+
 **This repo is supposed to be used as config by NvChad users!**
 
 - The main nvchad repo (NvChad/NvChad) is used as a plugin by this repo.
