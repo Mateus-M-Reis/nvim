@@ -55,6 +55,7 @@ map({ "n", "t", "i" },      "<A-:>", mterm("vsp",   "v"),                       
 
 -- cli apps
 map("n", "<leader>ll", mterm("float", "4", "lazygit && exit"), { desc = "lazygit"})
+map("n", "<leader>lo", mterm("float", "4", "opencode && exit"), { desc = "lazygit"})
 map("n", "<leader>lb", mterm("float", "2", "btop && exit"), { desc = "lazygit"})
 map("n", "<leader>lm", mterm("float", "2", "mc && exit"), { desc = "lazygit"})
 

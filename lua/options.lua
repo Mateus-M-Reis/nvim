@@ -1,32 +1,23 @@
 require "nvchad.options"
-
--- local o = vim.o
--- o.cursorlineopt ='both' -- to enable cursorline!
 local opt = vim.opt
+-- local o = vim.o
+
 opt.foldmethod = "indent"
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 opt.foldlevel = 99
-opt.clipboard = "unnamedplus"
+
+--opt.sessionoptions:remove("buffers")
+---- Ensure tabpages is present (it usually is by default)
+--opt.sessionoptions:append("tabpages")
 
 vim.cmd[[ au FileType vim setlocal fo-=c fo-=r fo-=o ]]
-vim.cmd[[ set nowrap ]]
-
---vim.filetype.add({
---  extension = {
---    fp = "glsl",
---    fs = "glsl",
---    vp = "glsl",
---  }
---})
 
 vim.filetype.add({
   extension = {
     script = "lua",
     gui_script = "lua",
+    fp = "glsl",
+    fs = "glsl",
+    vp = "glsl",
   }
 })
-
--- local o = vim.o
--- o.cursorlineopt ='both' -- to enable cursorline!
---
-vim.opt.splitkeep = "screen"

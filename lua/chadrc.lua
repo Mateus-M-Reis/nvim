@@ -1,24 +1,27 @@
--- This file needs to have same structure as nvconfig.lua 
+-- This file needs to have same structure as nvconfig.lua
 -- https://github.com/NvChad/ui/blob/v3.0/lua/nvconfig.lua
--- Please read that file to know all available options :( 
+-- Please read that file to know all available options :(
 
 ---@type ChadrcConfig
-local M = {}
+local options = {
+  base46 = {
+    theme = "ayu_light",
+    -- hl_override = {
+    -- 	Comment = { italic = true },
+    -- 	["@comment"] = { italic = true },
+    -- },
+    theme_toggle = { "ayu_light", "ayu_dark" },
+  },
 
-M.base46 = {
-	theme = "ayu_light",
+  -- nvdash = { load_on_startup = true },
 
-	-- hl_override = {
-	-- 	Comment = { italic = true },
-	-- 	["@comment"] = { italic = true },
-	-- },
+  ui = {
+    tabufline = {
+      lazyload = false,
+      order = { "buffers", "tabs", "btns" },
+    },
+  },
 }
 
--- M.nvdash = { load_on_startup = true }
--- M.ui = {
---       tabufline = {
---          lazyload = false
---      }
--- }
-
-return M
+local status, chadrc = pcall(require, "chadrc")
+return vim.tbl_deep_extend("force", options, status and chadrc or {})
