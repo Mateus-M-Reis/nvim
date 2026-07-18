@@ -29,6 +29,20 @@ map("n", "<A-p>", "<cmd> tabprev <CR>",                                     {des
 map("n", "<A-N>", "<cmd> lua require('nvchad.tabufline').move_buf(1)<CR>",  {desc = "Tab/Buf move buffer left"})
 map("n", "<A-P>", "<cmd> lua require('nvchad.tabufline').move_buf(-1)<CR>", {desc = "Tab/Buf move buffer right"})
 
+-- Close terminal buffers automatically when the process exits
+vim.api.nvim_create_autocmd("TermClose", {
+  pattern = "*",
+  callback = function(args)
+    -- Only close if it's a terminal buffer and we're still in it
+    vim.schedule(function()
+      local buf = args.buf
+      if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buftype == "terminal" then
+        vim.api.nvim_buf_delete(buf, { force = true })
+      end
+    end)
+  end,
+})
+
 local mterm = function (pos, id, cmd)
   return function ()
     if id == "1" then
@@ -45,10 +59,10 @@ local mterm = function (pos, id, cmd)
   end
 end
 -- Term
-map({ "n", "t", "i" },      "<A-h>", mterm("float", "1"),                               { desc = "Term toggle f"   })
-map({ "n", "t", "i" },      "<A-j>", mterm("float", "2"),                               { desc = "Term toggle F"   })
-map({ "n", "t", "i" },      "<A-k>", mterm("float", "3"),                               { desc = "Term toggle v"   })
-map({ "n", "t", "i" },      "<A-l>", mterm("float", "4"),                               { desc = "Term toggle hf"  })
+map({ "n", "t", "i" },      "<A-j>", mterm("float", "1"),                               { desc = "Term toggle f"   })
+map({ "n", "t", "i" },      "<A-k>", mterm("float", "2"),                               { desc = "Term toggle F"   })
+map({ "n", "t", "i" },      "<A-l>", mterm("float", "3"),                               { desc = "Term toggle v"   })
+map({ "n", "t", "i" },      "<A-h>", mterm("float", "4"),                               { desc = "Term toggle hf"  })
 map({ "n", "t", "i" },      "<A-;>", mterm("sp",    "h"),                               { desc = "Term toggle h"   })
 map({ "n", "t", "i" },      "<A-:>", mterm("vsp",   "v"),                               { desc = "Term toggle v"   })
 --map({ "t", "t", "i" },      "<C-t>", replace("<C-\\><C-N>", true, true, true),          { desc = "Term normal mode"})

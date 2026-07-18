@@ -5,6 +5,7 @@ local opt = vim.opt
 opt.foldmethod = "indent"
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 opt.foldlevel = 99
+opt.wrap = false
 
 --opt.sessionoptions:remove("buffers")
 ---- Ensure tabpages is present (it usually is by default)

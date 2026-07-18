@@ -11,6 +11,7 @@ local options = {
     -- 	["@comment"] = { italic = true },
     -- },
     theme_toggle = { "ayu_light", "ayu_dark" },
+    transparency = true,
   },
 
   -- nvdash = { load_on_startup = true },
