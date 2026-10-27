@@ -43,6 +43,39 @@ vim.api.nvim_create_autocmd("TermClose", {
   end,
 })
 
+-- Geometry for a borderless float that fills everything to the right of
+-- nvim-tree (the sidebar plus its vertical separator stay visible). With no
+-- tree open it fills the whole editor. NvChad turns these fractions back into
+-- cells with math.ceil, so the tiny epsilon keeps integer columns exact.
+local free_area_float = function ()
+  local cols = vim.o.columns
+  local left, width = 0, cols
+
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    if vim.bo[vim.api.nvim_win_get_buf(win)].filetype == "NvimTree" then
+      local col = vim.api.nvim_win_get_position(win)[2]
+      local w = vim.api.nvim_win_get_width(win)
+      if col == 0 then
+        left = w + 1 -- skip the separator column drawn next to the tree
+        width = cols - left
+      else
+        width = col - 1
+      end
+      break
+    end
+  end
+
+  local eps = 1e-6
+  return {
+    relative = "editor",
+    width = math.max(width, 1) / cols - eps,
+    height = 1.0, -- clamped by Neovim to the editor height above the cmdline
+    row = 0,
+    col = left / cols - eps,
+    border = "none",
+  }
+end
+
 local mterm = function (pos, id, cmd)
   return function ()
     if id == "1" then
@@ -52,7 +85,7 @@ local mterm = function (pos, id, cmd)
     elseif id == "3" then
       term.toggle { pos = pos, id = id, cmd = cmd, float_opts = { width = 0.49, height = 1.0, col = 0.5 } }
     elseif id == "4" then
-      term.toggle { pos = pos, id = id, cmd = cmd, float_opts = { width = 0.9, height = 0.9 } }
+      term.toggle { pos = pos, id = id, cmd = cmd, float_opts = free_area_float() }
     else
       term.toggle { pos = pos, id = id, cmd = cmd}
     end
@@ -74,26 +107,6 @@ map("n", "<leader>lb", mterm("float", "2", "btop && exit"), { desc = "lazygit"})
 map("n", "<leader>lm", mterm("float", "2", "mc && exit"), { desc = "lazygit"})
 
 -- lovr
-local lovr = "~/.local/bin/lovr-x86_64.AppImage"
+local lovr = "~/.local/bin/lovr-v0.19.0-x86_64.AppImage"
 map("n", "<BS>", mterm("float", "1", lovr .. " ./ && exit"     ), { desc = "lovr" })
 map("n", "<A-BS>", mterm("float", "1", lovr .. " dev/lodr ./ && exit"), { desc = "lovr hot-reload" })
-
----- love
---local love = "~/.local/bin/love-11.5-x86_64.AppImage"
-----local feather = "feather run --love ~/.local/bin/love-11.5-x86_64.AppImage"
---map("n", "<BS>", mterm("float", "1", love .. " ./"   ), { desc = "love" })
-----map("n", "<A-BS>", mterm("float", "1", feather .. " ./"), { desc = "love autoreloading" })
-
--- defold
---map("n", "<F5>", "<Cmd>DoNe build<CR>", { desc = "defold start" })
---map("n", "<A-BS>", "<Cmd>DoNe reload<CR>", { desc = "defold hot-reload" })
-
--- music
-local strudel = require("strudel")
-map("n", "<leader>sl", strudel.launch,     { desc = "Launch Strudel" })
-map("n", "<leader>sq", strudel.quit,       { desc = "Quit Strudel" })
-map("n", "<leader>st", strudel.toggle,     { desc = "Strudel Toggle Play/Stop" })
-map("n", "<leader>su", strudel.update,     { desc = "Strudel Update" })
-map("n", "<leader>ss", strudel.stop,       { desc = "Strudel Stop Playback" })
-map("n", "<leader>sb", strudel.set_buffer, { desc = "Strudel set current buffer" })
-map("n", "<leader>sx", strudel.execute,    { desc = "Strudel set current buffer and update" })

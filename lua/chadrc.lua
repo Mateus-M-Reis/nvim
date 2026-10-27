@@ -5,12 +5,12 @@
 ---@type ChadrcConfig
 local options = {
   base46 = {
-    theme = "ayu_light",
+    theme = "ayu_dark",
     -- hl_override = {
     -- 	Comment = { italic = true },
     -- 	["@comment"] = { italic = true },
     -- },
-    theme_toggle = { "ayu_light", "ayu_dark" },
+    theme_toggle = { "ayu_dark", "ayu_dark" },
     transparency = true,
   },
 
